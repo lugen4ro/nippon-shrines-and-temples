@@ -16,7 +16,7 @@ const NavBar = () => {
                         width="32"
                         height="32"
                     />
-                    <Text size="6">Nippon Shrines & Temples</Text>
+                    <Text size="6">Nippon Shrines</Text>
                 </Flex>
                 <Flex gap="8">
                     <Link href="/map">Map</Link>

@@ -7,7 +7,6 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import CustomMarker from "./Marker";
 import CustomPopup from "./Popup";
-import { Button } from "@radix-ui/themes";
 interface Props {
     markers: Place[];
 }
@@ -28,6 +27,7 @@ const Map = ({ markers }: Props) => {
             minZoom={5}
             maxZoom={18}
             className="z-0"
+            zoomControl={false} // No overlay zoom contorls
         >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
