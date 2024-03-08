@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma" // For comptability with planetscale
+}
+
+model Place {
+    id                Int            @id @default(autoincrement())
+    slug              String         @unique @db.VarChar(255)
+    name              String         @db.VarChar(255)
+    name_jp           String         @db.VarChar(255)
+    desc              String         @db.Text
+    category          Category
+    prefecture_slug   PrefectureSlug
+    geocode_latitude  Float
+    geocode_longitude Float
+    gmap_link         String         @db.Text // Links can be very long
+    total_reviews     Int // 32bits --> max value signed = 2,147,483,647
+    wiki_link         String?        @db.Text
+    icon_url          String?        @db.Text
+    createdAt         DateTime       @default(now())
+    updatedAt         DateTime       @updatedAt
+    Image             Image[]
+}
+
+model Image {
+    public_id   String  @id @db.VarChar(255) // cloudinary public_id
+    width       Int
+    height      Int
+    format      String
+    url         String  @db.Text
+    bytes       Int
+    place_id    Int
+    place       Place   @relation(fields: [place_id], references: [id])
+    icon        Boolean @default(false)
+    source_name String  @default("") @db.VarChar(255)
+    source_url  String  @db.Text
+}
+
+enum Category {
+    TEMPLE
+    SHRINE
+    OTHER
+}
+
+enum PrefectureSlug {
+    hokkaido
+    aomori
+    iwate
+    miyagi
+    akita
+    yamagata
+    fukushima
+    ibaraki
+    tochigi
+    gunma
+    saitama
+    chiba
+    tokyo
+    kanagawa
+    niigata
+    toyama
+    ishikawa
+    fukui
+    yamanashi
+    nagano
+    gifu
+    shizuoka
+    aichi
+    mie
+    shiga
+    kyoto
+    osaka
+    hyogo
+    nara
+    wakayama
+    tottori
+    shimane
+    okayama
+    hiroshima
+    yamaguchi
+    tokushima
+    kagawa
+    ehime
+    kochi
+    fukuoka
+    saga
+    nagasaki
+    kumamoto
+    oita
+    miyazaki
+    kagoshima
+    okinawa
+}

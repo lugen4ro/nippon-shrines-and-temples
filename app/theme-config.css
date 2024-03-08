@@ -1,0 +1,5 @@
+.radix-themes {
+    --default-font-family: var(
+        --font-inter
+    ) !important; /* Wihout !important it gets overwritten by sth else */
+}
