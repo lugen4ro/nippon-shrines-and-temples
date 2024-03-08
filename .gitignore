@@ -43,3 +43,4 @@ next-env.d.ts
 cli-tool/data/
 cli-tool/.env
 cli-tool/node_modules
+cli-tool/cli.js

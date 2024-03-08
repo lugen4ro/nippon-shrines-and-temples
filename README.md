@@ -2,7 +2,7 @@
 
 This is a Next.js project for exploring Japanes Shrines and Temples on a simple and clearn map.
 
-A working website can be found <a href="https://temple-shrine-map-japan.vercel.app/map" target="_blank">HERE</a>.
+A working website can be found <a href="https://nipponshrines.com/" target="_blank">HERE</a>.
 
 It uses the following tools / services.
 
@@ -43,7 +43,7 @@ To use this project, you must setup cloudinary and a MySQL database.
 Specify your environment by setting the variables in the `.env` file.
 Create the `.env` by renaming `.env_example` to `.env` and the filling in the values.
 
-.env_exampe
+.env_example
 
 ```
 # This is just a placeholder file. To actually use do the following:

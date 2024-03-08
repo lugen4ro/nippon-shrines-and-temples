@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description:
         "Explore renowned Japanese shrines and temples on a simple and clean looking map.",
     alternates: {
-        canonical: "https://temple-shrine-map-japan.vercel.app/map",
+        canonical: "https://nipponshrines.com/",
         // languages: {
         //     "en"
         // }

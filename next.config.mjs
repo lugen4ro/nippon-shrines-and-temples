@@ -31,7 +31,7 @@ export default withSentryConfig(
         // Suppresses source map uploading logs during build
         silent: true,
         org: "lugen4ro",
-        project: "temple-shrine-map-japan",
+        project: "nippon-shrines-and-temples",
     },
     {
         // For all available options, see:

@@ -1,5 +1,5 @@
 export default async function sitemap() {
-    const baseUrl = "https://temple-shrine-map-japan.vercel.app";
+    const baseUrl = "https://nipponshrines.com";
 
     return [
         { url: `${baseUrl}/map`, lastModified: new Date() },

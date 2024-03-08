@@ -57,7 +57,7 @@ program
 }));
 program
     .command("updatePlace <env> <place_slug>")
-    .argument("[dataDir]", "Path to directory containing places.csv and images directory (No trailing slash!)", "/mnt/c/Users/nakam/OneDrive/TempleShrine")
+    .argument("[dataDir]", "Path to directory containing places.csv and images directory (No trailing slash!)", process.env.DATA_DIR)
     .description("Update one place")
     .action((env, place_slug, dataDir) => __awaiter(void 0, void 0, void 0, function* () {
     // Parse env
@@ -83,7 +83,7 @@ program
 program
     .command("updatePlaces <env>")
     .argument("[sync]", "If 'sync', delete all existing places, then upload all local ones. For any other value, upload all local places if they do not exist yet", "no-sync")
-    .argument("[dataDir]", "Path to directory containing places.csv and images directory (No trailing slash!)", "/mnt/c/Users/nakam/OneDrive/TempleShrine")
+    .argument("[dataDir]", "Path to directory containing places.csv and images directory (No trailing slash!)", process.env.DATA_DIR)
     .description("Update all places")
     .action((env, sync, dataDir) => __awaiter(void 0, void 0, void 0, function* () {
     // Parse env
@@ -323,11 +323,11 @@ function parseEnv(env) {
     let base_url;
     let apiKey;
     if (env === "dev") {
-        base_url = "http://localhost:3000";
+        base_url = process.env.BASE_URL_DEV;
         apiKey = process.env.API_KEY_DEV;
     }
     else {
-        base_url = "https://temple-shrine-map-japan.vercel.app";
+        base_url = process.env.BASE_URL_PROD;
         apiKey = process.env.API_KEY_PROD;
     }
     if (!apiKey)
