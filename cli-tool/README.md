@@ -117,11 +117,11 @@ Make sure it is executable by doing `chmod +x build_cli.sh`
 
 ## Using the cli-tool
 
-It can be used with the tsmj command.
-You can check its signature with `tsmj -h`
+It can be used with the nsat command.
+You can check its signature with `nsat -h`
 
 ```
-Usage: tsmj [options] [command]
+Usage: nsat [options] [command]
 
 Options:
   -h, --help                                display help for command

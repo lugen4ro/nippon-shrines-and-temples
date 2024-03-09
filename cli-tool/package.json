@@ -12,7 +12,7 @@
         "typescript": "^5.4.2"
     },
     "bin": {
-        "tsmj": "./cli.js"
+        "nsat": "./cli.js"
     },
     "dependencies": {
         "iconv": "^3.0.1",
