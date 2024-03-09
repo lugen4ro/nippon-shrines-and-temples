@@ -17,6 +17,15 @@ const config: Config = {
                 "gradient-conic":
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
             },
+            height: {
+                screen: ["100vh", "100dvh"] as any, // as any to circumvent typescript wrongfully seeing this as an arror
+            },
+            minHeight: {
+                screen: ["100vh", "100dvh"] as any,
+            },
+            maxHeight: {
+                screen: ["100vh", "100dvh"] as any,
+            },
         },
     },
     plugins: [],

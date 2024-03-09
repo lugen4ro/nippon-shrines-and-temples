@@ -5,7 +5,7 @@ import React from "react";
 // TODO: Style heading for all pages in on place (Cannot apply bottom-margin here...)
 const AboutPage = () => {
     return (
-        <Container className="py-5" size="3">
+        <Container className="py-5 px-5" size="3">
             <Heading as="h1">About this website</Heading>
             <Flex direction="column" gap="5">
                 <Text>Hi there, thanks for visiting my website!</Text>
@@ -45,6 +45,6 @@ const AboutPage = () => {
 export default AboutPage;
 
 export const metadata: Metadata = {
-    title: "About - Nippon Shrines & Temples",
-    description: "About Nippon Shrines & Temples",
+    title: "About - Nippon Shrines",
+    description: "About Nippon Shrines",
 };

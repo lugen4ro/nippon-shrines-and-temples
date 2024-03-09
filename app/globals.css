@@ -2,12 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Size of icons and popups */
 :root {
-    --popup-width: 25rem;
+    --popup-width: 22rem;
     --icon-size: 6rem;
+}
+@media (min-width: 768px) {
+    :root {
+        --popup-width: 25rem;
+        --icon-size: 6rem;
+    }
 }
 
 /* ---------- Leaflet (Map) Style ---------- */
+
+/* Leaflet attribution size */
+.leaflet-control-attribution {
+    font-size: 8px; /* For mobile */
+}
+@media (min-width: 768px) {
+    .leaflet-control-attribution {
+        font-size: 12px;
+    }
+}
+
 .popupImageContainer {
     height: calc(var(--popup-width) * 2 / 3);
 }

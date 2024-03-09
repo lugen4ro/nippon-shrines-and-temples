@@ -40,8 +40,9 @@ const MapContainer = ({ places }: Props) => {
             <Box height="100%" width="100%" className="relative">
                 <Flex
                     direction="column"
-                    gap="6"
-                    className="absolute z-50 right-10 top-10 w-40 "
+                    gap="3"
+                    className="absolute z-50 top-6 right-6 w-40 "
+                    display={{ initial: "none", sm: "flex" }} // Show Filter buttons only above tablets for now
                 >
                     <FilterButton
                         category="SHRINE"

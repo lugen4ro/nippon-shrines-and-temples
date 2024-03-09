@@ -41,7 +41,9 @@ const CustomPopup = ({ marker }: { marker: Place }) => {
                     <Badge category={marker.category} />
                 </Flex>
 
-                <Text className="block py-3">{marker.desc}</Text>
+                <Text className="block py-3" size={{ initial: "1", sm: "2" }}>
+                    {marker.desc}
+                </Text>
 
                 <Flex gap="2" justify="between" className="px-10">
                     <Flex justify="start" gap="2">

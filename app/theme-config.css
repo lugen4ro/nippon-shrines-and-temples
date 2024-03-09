@@ -1,5 +1,10 @@
 .radix-themes {
+    /* --default-font-size: 50px !important; */
+    /* --default-letter-spacing: 10; */
+    /* --default-line-height: 5; */
     --default-font-family: var(
         --font-inter
     ) !important; /* Wihout !important it gets overwritten by sth else */
+
+    /* ... */
 }

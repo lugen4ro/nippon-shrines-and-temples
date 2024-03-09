@@ -15,7 +15,7 @@ export default async function Home() {
 }
 
 export const metadata: Metadata = {
-    title: "Nippon Shrines & Temples",
+    title: "Nippon Shrines",
     description:
         "Explore renowned Japanese shrines and temples on a simple and clean looking map.",
     alternates: {
