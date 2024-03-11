@@ -12,7 +12,7 @@ It uses the following tools / services.
 -   Radix UI
 -   Leaflet - For the map
 -   Prisma - ORM to interact with the MySQL database.
--   PlanetScale - For hosting the the MySQL database.
+-   Aiven - For hosting the the MySQL database.
 -   Vercel - For hosting the Next.js server.
 -   Cloudinary - For storing image assets
 -   Sentry - For monitoring and logging.
@@ -51,7 +51,7 @@ Create the `.env` by renaming `.env_example` to `.env` and the filling in the va
 # For deployment: Do not use this file, instead set the below variables as environmental variables when deploying.
 
 # Database for storing information about each place
-DATABASE_URL="mysql://root:exampleserver@localhost:3306/databasename" # Database URL to use. Either a local hosted one or on a platform such as Planetscale
+DATABASE_URL="mysql://root:exampleserver@localhost:3306/databasename" # Database URL to use. Either a local hosted one or on a platform such as Aiven
 
 # Sentry is used for logging / monitoring
 SENTRY_AUTH_TOKEN="..."

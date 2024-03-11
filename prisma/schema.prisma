@@ -11,7 +11,7 @@ generator client {
 datasource db {
     provider     = "mysql"
     url          = env("DATABASE_URL")
-    relationMode = "prisma" // For comptability with planetscale
+    relationMode = "prisma" // For comptability with aiven
 }
 
 model Place {
