@@ -242,6 +242,12 @@ function createImages(base_url, apiKey, dataDir, place_slug) {
         const imageDir = dataDir + "/images/" + place_slug;
         // Get all image files for this place
         let files = yield listFiles(imageDir);
+        // if directory is empty, just skip (allow places without images)
+        if (!files || files.length === 0) {
+            console.log("No images found for -> " + place_slug);
+            return;
+        }
+        // Remove sources.json from image files
         files = files.filter((f) => f !== "source.json");
         // Check that a "main.<ext>" image exists which is used as the main image / icon
         if (!files.some((f) => f.startsWith("main.")))

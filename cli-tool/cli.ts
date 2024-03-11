@@ -316,6 +316,14 @@ async function createImages(
 
     // Get all image files for this place
     let files = await listFiles(imageDir);
+
+    // if directory is empty, just skip (allow places without images)
+    if (!files || files.length === 0) {
+        console.log("No images found for -> " + place_slug);
+        return;
+    }
+
+    // Remove sources.json from image files
     files = files.filter((f) => f !== "source.json");
 
     // Check that a "main.<ext>" image exists which is used as the main image / icon
