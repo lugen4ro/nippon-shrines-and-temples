@@ -1,5 +1,12 @@
 import { Place } from "@prisma/client";
-import { Box, Flex, Heading, Link, Text } from "@radix-ui/themes";
+import {
+    Box,
+    Flex,
+    Heading,
+    Link,
+    Badge as RadixBadge,
+    Text,
+} from "@radix-ui/themes";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -8,8 +15,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { Image } from "../api/images/[id]/route";
-import NextImage from "next/image";
 import Badge from "./Badge";
+import prefectureMap from "../data/prefectures";
 
 const CustomPopup = ({ marker }: { marker: Place }) => {
     const [images, setImages] = useState<Image[]>([]);
@@ -21,6 +28,9 @@ const CustomPopup = ({ marker }: { marker: Place }) => {
             setImages(res.data);
         });
     }, []);
+
+    const prefecture =
+        prefectureMap[marker.prefecture_slug].prefecture_romaji.split(" ")[0];
 
     return (
         <Box>
@@ -35,7 +45,14 @@ const CustomPopup = ({ marker }: { marker: Place }) => {
             <Box className="p-3">
                 <Flex justify="between">
                     <Box>
-                        <Heading size="6">{marker.name}</Heading>
+                        <Box>
+                            <Heading size="6" className="inline-block">
+                                {marker.name}
+                            </Heading>
+                            <RadixBadge ml="2">
+                                <Text size="2">{prefecture}</Text>
+                            </RadixBadge>
+                        </Box>
                         <Text size="5">{marker.name_jp}</Text>
                     </Box>
                     <Badge category={marker.category} />
