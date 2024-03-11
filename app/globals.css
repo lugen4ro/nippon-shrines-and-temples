@@ -6,6 +6,7 @@
 :root {
     --popup-width: 22rem;
     --icon-size: 6rem;
+    /* box-sizing: border-box; */
 }
 @media (min-width: 768px) {
     :root {
@@ -24,10 +25,6 @@
     .leaflet-control-attribution {
         font-size: 12px;
     }
-}
-
-.popupImageContainer {
-    height: calc(var(--popup-width) * 2 / 3);
 }
 
 .leaflet-container {
@@ -81,11 +78,75 @@ a.leaflet-popup-close-button {
     height: var(--icon-size);
 }
 
+/* ---------- React Slick (Image Carousel)---------- */
+
 .slides {
-    /* width: 200px !important; */
     width: 100% !important;
-    position: relative;
+    height: calc(var(--popup-width) * 2 / 3);
 }
+
+.slick-dots {
+    position: absolute !important;
+    bottom: 2px !important;
+    width: auto !important;
+    align-self: center;
+    justify-self: center;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    background-color: #555555aa;
+    border-radius: 10px;
+}
+
+.slick-dots li {
+    margin: 0 !important;
+}
+
+.slick-dots li button:before {
+    color: #000 important;
+    font-size: 8px !important;
+    opacity: 0.8 !important;
+    /* background-color: #555555aa; */
+}
+
+.slick-dots li.slick-active button:before {
+    color: #ffffff !important;
+}
+
+.chevron {
+    background-color: #ffffffaa;
+    color: #444444;
+    position: absolute;
+    font-size: 1.3rem;
+    top: 50%;
+    z-index: 2;
+    border-radius: 100px;
+    height: 1.7rem;
+    width: 1.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chevron-right {
+    right: 5%;
+}
+
+.chevron-left {
+    left: 5%;
+}
+
+.chevronIconLeft {
+    /* color: red; */
+    /* font-size: 55px; */
+    margin-right: 0.2rem;
+}
+.chevronIconRight {
+    /* color: red; */
+    /* font-size: 55px; */
+    margin-left: 0.2rem;
+}
+
 .slick-prev,
 .slick-next {
     position: absolute;
@@ -98,6 +159,10 @@ a.leaflet-popup-close-button {
 .slick-next {
     right: 5% !important;
     z-index: 1;
+}
+
+button.slick-arrow:before {
+    font-size: 30px;
 }
 
 /* ---------- Hide Scrollbar globally ---------- */

@@ -1,6 +1,10 @@
 import { Place } from "@prisma/client";
+import { ChevronRightIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { FaChevronCircleLeft } from "react-icons/fa";
 import {
     Box,
+    Button,
     Flex,
     Heading,
     Link,
@@ -8,15 +12,15 @@ import {
     Text,
 } from "@radix-ui/themes";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { Image } from "../api/images/[id]/route";
-import Badge from "./Badge";
 import prefectureMap from "../data/prefectures";
+import Badge from "./Badge";
 
 const CustomPopup = ({ marker }: { marker: Place }) => {
     const [images, setImages] = useState<Image[]>([]);
@@ -97,6 +101,7 @@ const Carousel = ({
         fade: true,
         // lazyLoad: true,
         // dots: true,
+        dots: isLoading ? false : true,
         infinite: false,
         speed: 500,
         slidesToShow: 1,
@@ -105,35 +110,36 @@ const Carousel = ({
         className: "slides",
     };
 
+    const slider = useRef<Slider>(null);
+
     return (
-        <Slider {...settings}>
-            {isLoading && <Skeleton className="SkeletonImage" />}
-            {images.map(({ url, icon, source_url, source_name }, index) => (
-                <Box key={index} className="popupImageContainer">
-                    <img
-                        src={url}
-                        alt={`Slide ${index + 1}`}
-                        onLoad={icon ? onLoad : () => {}}
-                        style={{ display: isLoading ? "none" : "block" }}
-                    />
-                    {!isLoading && (
-                        <Box className="absolute bottom-2 right-2 bg-slate-300 bg-opacity-70 px-2 rounded">
-                            <a target="_blank" href={source_url}>
-                                <Text className="text-xxs text-black">
-                                    Source: {source_name}
-                                </Text>
-                            </a>
-                        </Box>
-                    )}
-                </Box>
-            ))}
-        </Slider>
+        <>
+            <Slider {...settings} ref={slider}>
+                {isLoading && <Skeleton className="SkeletonImage" />}
+                {images.map(({ url, icon, source_url, source_name }, index) => (
+                    <Box key={index} className="popupImageContainer relative">
+                        <img
+                            src={url}
+                            alt={`Slide ${index + 1}`}
+                            onLoad={icon ? onLoad : () => {}}
+                            style={{ display: isLoading ? "none" : "block" }}
+                        />
+                        {!isLoading && (
+                            <Box className="absolute bottom-1 right-1 bg-slate-300 bg-opacity-60 px-1.5 rounded ">
+                                <a
+                                    target="_blank"
+                                    href={source_url}
+                                    className="flex items-center"
+                                >
+                                    <Text className="text-xxs text-black">
+                                        Source: {source_name}
+                                    </Text>
+                                </a>
+                            </Box>
+                        )}
+                    </Box>
+                ))}
+            </Slider>
+        </>
     );
 };
-
-// <NextImage
-//     src={url}
-//     alt={`Slide ${index + 1}`}
-//     onLoad={icon ? onLoad : () => {}}
-//     fill
-// />
