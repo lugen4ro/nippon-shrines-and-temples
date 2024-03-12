@@ -251,7 +251,10 @@ function createImages(base_url, apiKey, dataDir, place_slug) {
         files = files.filter((f) => f !== "source.json");
         // Check that a "main.<ext>" image exists which is used as the main image / icon
         if (!files.some((f) => f.startsWith("main.")))
-            raiseError("No image with filename main.<ext> for place -> " + place_slug);
+            raiseError([
+                "No image with filename main.<ext> for place -> " + place_slug,
+                files,
+            ]);
         // Parse sources file content
         const sourceDict = yield parseSourceFile(imageDir);
         // Upload each image

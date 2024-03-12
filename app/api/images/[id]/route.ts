@@ -24,10 +24,6 @@ export async function GET(
         orderBy: [{ icon: "desc" }, { public_id: "asc" }], // icon desc so we get main image first
     });
 
-    // No data for that id
-    if (image_data.length === 0)
-        return NextResponse.json({ error: "No Images found" }, { status: 404 });
-
     // Return array of public id and order
     const res: Image[] = image_data
         .map((img) => ({

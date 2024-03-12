@@ -5,6 +5,7 @@ import csvParser from "csv-parser";
 import dotenv from "dotenv";
 import fs from "fs";
 import iconv from "iconv-lite";
+import { exit } from "process";
 import sharp from "sharp";
 
 type Env = "dev" | "prod";
@@ -328,9 +329,10 @@ async function createImages(
 
     // Check that a "main.<ext>" image exists which is used as the main image / icon
     if (!files.some((f) => f.startsWith("main.")))
-        raiseError(
-            "No image with filename main.<ext> for place -> " + place_slug
-        );
+        raiseError([
+            "No image with filename main.<ext> for place -> " + place_slug,
+            files,
+        ]);
 
     // Parse sources file content
     const sourceDict = await parseSourceFile(imageDir);

@@ -1,5 +1,12 @@
-import { Category } from "@prisma/client";
+import { Place } from "@prisma/client";
+import { Box } from "@radix-ui/themes";
+import L, { LeafletEventHandlerFnMap } from "leaflet";
+import "leaflet/dist/leaflet.css";
 import Image from "next/image";
+import { ReactNode } from "react";
+import { renderToString } from "react-dom/server";
+import { Marker } from "react-leaflet";
+import { remToPx } from "../lib/size_utils";
 
 const colorMap = {
     SHRINE: "border-red-500",
@@ -7,37 +14,60 @@ const colorMap = {
     OTHER: "border-green-500",
 };
 
+interface Props {
+    marker: Place;
+    iconSizeRem: number;
+    eventHandlers: LeafletEventHandlerFnMap;
+    children: ReactNode;
+}
+
 const CustomMarker = ({
-    icon_url,
-    icon_size_rem,
-    icon_size_px,
-    category,
-}: {
-    icon_url: string | null;
-    icon_size_rem: number;
-    icon_size_px: number;
-    category: Category;
-}) => {
-    const icon = icon_url ? icon_url : "icons/placeholder.png";
+    marker,
+    iconSizeRem,
+    eventHandlers,
+    children,
+}: Props) => {
     return (
-        <div
-            className={
-                "iconContainer rounded-full overflow-hidden flex border-4 " +
-                `${colorMap[category]}`
-            }
-            style={{
-                width: icon_size_rem + "rem",
-                height: icon_size_rem + "rem",
-            }}
+        <Marker
+            position={[marker.geocode_latitude, marker.geocode_longitude]}
+            icon={customIcon(marker, iconSizeRem)}
+            key={marker.id}
+            zIndexOffset={-100}
+            eventHandlers={eventHandlers}
         >
-            <Image
-                src={icon}
-                alt="Icon Image"
-                width={icon_size_px}
-                height={icon_size_px}
-            />
-        </div>
+            {children}
+        </Marker>
     );
+};
+
+// Marker Icon
+const customIcon = (marker: Place, iconSizeRem: number) => {
+    const iconSizePx = remToPx(iconSizeRem);
+
+    return L.divIcon({
+        className: "customIcon",
+        popupAnchor: [0, -iconSizePx / 2],
+        iconAnchor: [iconSizePx / 2, iconSizePx / 2],
+        html: renderToString(
+            <Box
+                className={
+                    "iconContainer rounded-full overflow-hidden flex border-4 " +
+                    `${colorMap[marker.category]}`
+                }
+                style={{
+                    width: iconSizeRem + "rem",
+                    height: iconSizeRem + "rem",
+                }}
+            >
+                <Image
+                    src={marker.icon_url ?? "/icons/placeholder.png"}
+                    alt="Icon Image"
+                    width={iconSizePx}
+                    height={iconSizePx}
+                />
+            </Box>
+        ),
+    });
 };
 
 export default CustomMarker;

@@ -1,25 +1,53 @@
 "use client";
 import { Place } from "@prisma/client";
-import L, { MarkerCluster } from "leaflet";
+import L, { LeafletEvent, Map as MapLeaflet, MarkerCluster } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { ReactNode, useState } from "react";
 import { renderToString } from "react-dom/server";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import useWindowSize from "../lib/useWindowSize";
 import CustomMarker from "./Marker";
 import CustomPopup from "./Popup";
+import { MarkerSize, MarkerSizeToggler } from "./MarkerSizeToggle";
+import { Box } from "@radix-ui/themes";
+import { remToPx } from "../lib/size_utils";
+import CustomMarkerClusterGroup from "./ClusterGroup";
+
 interface Props {
     markers: Place[];
+    markerSize: MarkerSize;
 }
 
-function convertRemToPixels(rem: number) {
-    return (
-        rem * parseFloat(getComputedStyle(document.documentElement).fontSize)
-    );
-}
-const iconSizeRem = 6; // rem
-const iconSizePixel = convertRemToPixels(iconSizeRem);
+const Map = ({ markers, markerSize }: Props) => {
+    const [map, setMap] = useState<MapLeaflet | null>(null);
 
-const Map = ({ markers }: Props) => {
+    const iconSizeRem = markerSize === "small" ? 3 : 6;
+    const iconSizePixel = remToPx(iconSizeRem);
+
+    console.log(markerSize);
+
+    const [width, height] = useWindowSize(); // [width, height]
+    const isMobile = width < 768;
+
+    // When popup is opened, automaticaly center it horizontally
+    const markerEventHandlers =
+        isMobile && map
+            ? {
+                  popupopen: (e: LeafletEvent) => {
+                      // find the pixel location on the map where the popup anchor is
+                      let px = map.project(e.target._popup._latlng);
+
+                      // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+                      // px.y -= e.target._popup._container.clientHeight / 2; // doesn't work on first click since the component is not rendered
+                      px.y -= 250;
+
+                      // pan to new center
+                      map.panTo(map.unproject(px), { animate: true });
+                  },
+              }
+            : {};
+
     return (
         <MapContainer
             center={[36.5, 137.0]}
@@ -28,59 +56,57 @@ const Map = ({ markers }: Props) => {
             maxZoom={18}
             className="z-0"
             zoomControl={false} // No overlay zoom contorls
+            ref={setMap}
         >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                 url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png"
             />
 
-            <MarkerClusterGroup
-                chunkedLoading
-                showCoverageOnHover={false} // When you mouse over a cluster it shows the bounds of its markers.
-                spiderfyOnMaxZoom={false} // When you click a cluster at the bottom zoom level we spiderfy it so you can see all of its markers
-                maxClusterRadius={iconSizePixel / 2} // default 80, can use function
-                iconCreateFunction={createCustomClusterIcon}
-            >
-                {markers.map((marker) => (
-                    <Marker
-                        position={[
-                            marker.geocode_latitude,
-                            marker.geocode_longitude,
-                        ]}
-                        icon={customIcon(marker)}
-                        key={marker.id}
-                        zIndexOffset={-100}
-                    >
-                        <Popup>{<CustomPopup marker={marker} />}</Popup>
-                    </Marker>
-                ))}
-            </MarkerClusterGroup>
+            {/* Since changing the maxClusterRadius for an existing MarkerClusterGroup doesn't work, just create two seperate ones */}
+            {/* For Small Marers */}
+            {markerSize === "small" ? (
+                <CustomMarkerClusterGroup
+                    iconSizeRem={iconSizeRem}
+                    markerSize={markerSize}
+                >
+                    {markers.map((marker) => (
+                        <CustomMarker
+                            key={marker.id}
+                            marker={marker}
+                            iconSizeRem={iconSizeRem}
+                            eventHandlers={markerEventHandlers}
+                        >
+                            <Popup autoPan={isMobile ? false : true}>
+                                {<CustomPopup marker={marker} />}
+                            </Popup>
+                        </CustomMarker>
+                    ))}
+                </CustomMarkerClusterGroup>
+            ) : null}
+
+            {/* For Large Marers */}
+            {markerSize === "large" ? (
+                <CustomMarkerClusterGroup
+                    iconSizeRem={iconSizeRem}
+                    markerSize={markerSize}
+                >
+                    {markers.map((marker) => (
+                        <CustomMarker
+                            key={marker.id}
+                            marker={marker}
+                            iconSizeRem={iconSizeRem}
+                            eventHandlers={markerEventHandlers}
+                        >
+                            <Popup autoPan={isMobile ? false : true}>
+                                {<CustomPopup marker={marker} />}
+                            </Popup>
+                        </CustomMarker>
+                    ))}
+                </CustomMarkerClusterGroup>
+            ) : null}
         </MapContainer>
     );
-};
-
-// Marker Icon
-const customIcon = (marker: Place) => {
-    return L.divIcon({
-        className: "customIcon",
-        popupAnchor: [0, -iconSizePixel / 2],
-        iconAnchor: [iconSizePixel / 2, iconSizePixel / 2],
-        html: renderToString(
-            <CustomMarker
-                icon_url={marker.icon_url}
-                icon_size_rem={iconSizeRem}
-                icon_size_px={iconSizePixel}
-                category={marker.category}
-            />
-        ),
-    });
-};
-
-// Cluster Icon
-const createCustomClusterIcon = function (cluster: MarkerCluster) {
-    return L.divIcon({
-        html: `<span class="cluster-icon" style="height:${iconSizeRem / 2}rem;width:${iconSizeRem / 2}rem">${cluster.getChildCount()}</span>`,
-    });
 };
 
 export default Map;

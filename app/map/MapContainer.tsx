@@ -1,12 +1,14 @@
 "use client";
-import * as Slider from "@radix-ui/react-slider";
-import { Box, Flex, Text } from "@radix-ui/themes";
-import "leaflet/dist/leaflet.css";
 import { Place } from "@prisma/client";
+import * as ToggleGroup from "@radix-ui/react-toggle-group";
+import { Box, Flex } from "@radix-ui/themes";
+import "leaflet/dist/leaflet.css";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { VscCircleLargeFilled, VscCircleSmallFilled } from "react-icons/vsc";
 import FilterButton from "./FilterButton";
-import SliderFilter from "./SliderFilter";
+import { MarkerSize, MarkerSizeToggler } from "./MarkerSizeToggle";
+import Map from "./Map";
 
 const DynamicMap = dynamic(() => import("./Map"), {
     ssr: false,
@@ -20,17 +22,18 @@ interface Props {
 const MapContainer = ({ places }: Props) => {
     const [showShrine, setShowShrine] = useState(true);
     const [showTemple, setShowTemple] = useState(true);
-    const [sliderValue, setSliderValue] = useState([0]);
+    const [markerSize, setMakerSize] = useState<MarkerSize>("small");
+    // const [sliderValue, setSliderValue] = useState([0]);
 
-    const maxReviews = places.reduce(
-        (maxValue, obj) => Math.max(maxValue, obj.total_reviews),
-        -Infinity
-    );
+    // const maxReviews = places.reduce(
+    //     (maxValue, obj) => Math.max(maxValue, obj.total_reviews),
+    //     -Infinity
+    // );
 
     // Filter by category
     places = places.filter((place) => {
-        if (place.total_reviews < (maxReviews * sliderValue[0]) / 100)
-            return false;
+        // if (place.total_reviews < (maxReviews * sliderValue[0]) / 100)
+        //     return false;
         if (place.category === "SHRINE") return showShrine;
         if (place.category === "TEMPLE") return showTemple;
     });
@@ -54,12 +57,17 @@ const MapContainer = ({ places }: Props) => {
                         show={showTemple}
                         setShow={setShowTemple}
                     />
+                    <MarkerSizeToggler
+                        value={markerSize}
+                        setValue={setMakerSize}
+                    />
                     {/* <SliderFilter */}
                     {/*     sliderValue={sliderValue} */}
                     {/*     setSliderValue={setSliderValue} */}
                     {/* /> */}
                 </Flex>
-                <DynamicMap markers={places} />
+                {/* <DynamicMap markers={places} markerSize={markerSize} /> */}
+                <Map markers={places} markerSize={markerSize} />
                 {/* <Map markers={places} /> */}
             </Box>
         </>
