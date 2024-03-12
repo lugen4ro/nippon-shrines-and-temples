@@ -33,7 +33,9 @@ export default async function Home() {
 
     const placesWithImages: PlaceWithImages[] = places.map((place) => {
         const placeImages = images.filter(
-            (image) => image.place_id === place.id
+            (image) =>
+                image.place_id === place.id &&
+                image.public_id.split("/")[1] !== "icon"
         );
 
         return { ...place, images: placeImages };
