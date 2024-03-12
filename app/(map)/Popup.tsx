@@ -26,10 +26,10 @@ const CustomPopup = ({ marker }: { marker: Place }) => {
         setIsLoading(true);
         axios.get<Image[]>("/api/images/" + marker.id).then((res) => {
             if (res.data.length === 0) {
-                setImages();
                 setIsLoading(false);
+            } else {
+                setImages(res.data);
             }
-            setImages(res.data);
         });
     }, []);
 
