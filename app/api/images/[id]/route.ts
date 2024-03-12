@@ -40,7 +40,6 @@ export async function GET(
                 (img) => !(img.icon && img.public_id.split("/")[1] === "icon")
             ); // Don't return icon image
 
-        console.log("returning images -> ", res);
         return NextResponse.json(res);
     } catch (error) {
         console.error(error);
