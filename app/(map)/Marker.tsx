@@ -66,7 +66,8 @@ const customIcon = (
                 }}
             >
                 <Image
-                    src={marker.icon_url ?? "/icons/placeholder.png"}
+                    // src={marker.icon_url ?? "/icons/placeholder.png"}
+                    src={marker.icon_url ?? "/icons/marker_fallback.png"}
                     alt={
                         "Marker Image for " +
                         marker.name +

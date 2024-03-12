@@ -25,6 +25,10 @@ const CustomPopup = ({ marker }: { marker: Place }) => {
     useEffect(() => {
         setIsLoading(true);
         axios.get<Image[]>("/api/images/" + marker.id).then((res) => {
+            if (res.data.length === 0) {
+                setImages();
+                setIsLoading(false);
+            }
             setImages(res.data);
         });
     }, []);
@@ -98,13 +102,13 @@ const Carousel = ({
 }) => {
     const settings = {
         fade: true,
-        dots: isLoading ? false : true,
+        dots: isLoading || images.length === 0 ? false : true,
         // infinite: false,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        arrows: isLoading ? false : true,
+        arrows: isLoading || images.length === 0 ? false : true,
         className: "slides",
     };
 
@@ -112,32 +116,48 @@ const Carousel = ({
 
     return (
         <>
-            <Slider {...settings} ref={slider}>
-                {isLoading && <Skeleton className="SkeletonImage" />}
-                {images.map(({ url, icon, source_url, source_name }, index) => (
-                    <Box key={index} className="popupImageContainer relative">
-                        <img
-                            src={url}
-                            alt={`Slide ${index + 1} for ${marker.name} / ${marker.name_jp}`}
-                            onLoad={icon ? onLoad : () => {}}
-                            style={{ display: isLoading ? "none" : "block" }}
-                        />
-                        {!isLoading && (
-                            <Box className="absolute bottom-1 right-1 bg-slate-300 bg-opacity-60 px-1.5 rounded ">
-                                <a
-                                    target="_blank"
-                                    href={source_url}
-                                    className="flex items-center"
-                                >
-                                    <Text className="text-xxs text-black">
-                                        Source: {source_name}
-                                    </Text>
-                                </a>
+            {!isLoading && images.length === 0 && (
+                <Box className="noimage flex justify-center items-center bg-slate-200">
+                    <Text className="" size="5">
+                        No Images available... :/
+                    </Text>
+                </Box>
+            )}
+            {(isLoading || images.length !== 0) && (
+                <Slider {...settings} ref={slider}>
+                    {isLoading && <Skeleton className="SkeletonImage" />}
+                    {images.map(
+                        ({ url, icon, source_url, source_name }, index) => (
+                            <Box
+                                key={index}
+                                className="popupImageContainer relative"
+                            >
+                                <img
+                                    src={url}
+                                    alt={`Slide ${index + 1} for ${marker.name} / ${marker.name_jp}`}
+                                    onLoad={icon ? onLoad : () => {}}
+                                    style={{
+                                        display: isLoading ? "none" : "block",
+                                    }}
+                                />
+                                {!isLoading && (
+                                    <Box className="absolute bottom-1 right-1 bg-slate-300 bg-opacity-60 px-1.5 rounded ">
+                                        <a
+                                            target="_blank"
+                                            href={source_url}
+                                            className="flex items-center"
+                                        >
+                                            <Text className="text-xxs text-black">
+                                                Source: {source_name}
+                                            </Text>
+                                        </a>
+                                    </Box>
+                                )}
                             </Box>
-                        )}
-                    </Box>
-                ))}
-            </Slider>
+                        )
+                    )}
+                </Slider>
+            )}
         </>
     );
 };

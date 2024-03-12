@@ -91,6 +91,10 @@ a.leaflet-popup-close-button {
 
 /* ---------- React Slick (Image Carousel)---------- */
 
+.noimage {
+    height: calc(var(--popup-width) * 2 / 3) !important;
+}
+
 .slides {
     width: 100% !important;
     height: calc(var(--popup-width) * 2 / 3);
@@ -194,9 +198,6 @@ html::-webkit-scrollbar {
 }
 
 /* ---------- Filter Slider style ---------- */
-/* button { */
-/*     all: unset; */
-/* } */
 
 .SliderRoot {
     width: 100%;

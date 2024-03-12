@@ -37,6 +37,6 @@ export const config = {
          * - about
          * - public
          */
-        "/((?!_next/static|_next/image|favicon.ico|about|icons|sitemap.xml).*)",
+        "/((?!_next/static|_next/image|favicon.ico|about|icons|images|sitemap.xml).*)",
     ],
 };
