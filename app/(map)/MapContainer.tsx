@@ -9,6 +9,7 @@ import { VscCircleLargeFilled, VscCircleSmallFilled } from "react-icons/vsc";
 import FilterButton from "./FilterButton";
 import { MarkerSize, MarkerSizeToggler } from "./MarkerSizeToggle";
 import Map from "./Map";
+import { PlaceWithImages } from "./page";
 
 const DynamicMap = dynamic(() => import("./Map"), {
     ssr: false,
@@ -16,7 +17,7 @@ const DynamicMap = dynamic(() => import("./Map"), {
 });
 
 interface Props {
-    places: Place[];
+    places: PlaceWithImages[];
 }
 
 const MapContainer = ({ places }: Props) => {

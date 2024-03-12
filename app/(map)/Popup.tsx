@@ -17,21 +17,13 @@ import "slick-carousel/slick/slick.css";
 import { Image } from "../api/images/[id]/route";
 import prefectureMap from "../data/prefectures";
 import Badge from "./Badge";
+import { PlaceWithImages } from "./page";
 
-const CustomPopup = ({ marker }: { marker: Place }) => {
-    const [images, setImages] = useState<Image[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        setIsLoading(true);
-        axios.get<Image[]>("/api/images/" + marker.id).then((res) => {
-            if (res.data.length === 0) {
-                setIsLoading(false);
-            } else {
-                setImages(res.data);
-            }
-        });
-    }, []);
+const CustomPopup = ({ marker }: { marker: PlaceWithImages }) => {
+    const images = marker.images;
+    const [isLoading, setIsLoading] = useState(
+        images.length === 0 ? false : true
+    );
 
     const prefecture =
         prefectureMap[marker.prefecture_slug].prefecture_romaji.split(" ")[0];

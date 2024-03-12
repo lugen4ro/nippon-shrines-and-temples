@@ -1,21 +1,18 @@
 "use client";
-import { Place } from "@prisma/client";
-import L, { LeafletEvent, Map as MapLeaflet, MarkerCluster } from "leaflet";
+import { LeafletEvent, Map as MapLeaflet } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ReactNode, useState } from "react";
-import { renderToString } from "react-dom/server";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-cluster";
-import useWindowSize from "../lib/useWindowSize";
-import CustomMarker from "./Marker";
-import CustomPopup from "./Popup";
-import { MarkerSize, MarkerSizeToggler } from "./MarkerSizeToggle";
-import { Box } from "@radix-ui/themes";
+import { useState } from "react";
+import { MapContainer, Popup, TileLayer } from "react-leaflet";
 import { remToPx } from "../lib/size_utils";
+import useWindowSize from "../lib/useWindowSize";
 import CustomMarkerClusterGroup from "./ClusterGroup";
+import CustomMarker from "./Marker";
+import { MarkerSize } from "./MarkerSizeToggle";
+import CustomPopup from "./Popup";
+import { PlaceWithImages } from "./page";
 
 interface Props {
-    markers: Place[];
+    markers: PlaceWithImages[];
     markerSize: MarkerSize;
 }
 
