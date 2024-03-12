@@ -3,18 +3,16 @@ import L, { MarkerCluster } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ReactNode } from "react";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { MarkerSize } from "./MarkerSizeToggle";
 import { remToPx } from "../lib/size_utils";
+import { MarkerSize } from "./MarkerSizeToggle";
 
 interface Props {
     iconSizeRem: number;
-    // maxClusterRadius: number | ((zoomLevel: number) => number);
     markerSize: MarkerSize;
     children: ReactNode;
 }
 
 const CustomMarkerClusterGroup = ({
-    // maxClusterRadius,
     iconSizeRem,
     markerSize,
     children,
@@ -23,9 +21,9 @@ const CustomMarkerClusterGroup = ({
     const maxClusterRadius = (zoomLevel: number) => {
         return iconSizePx / 3;
     };
-    const disableClusteringAtZoom = markerSize === "small" ? 12 : 15;
+    const disableClusteringAtZoom = markerSize === "small" ? 12 : 13;
 
-    const fontSize = markerSize === "small" ? "1rem" : "1.5rem";
+    const fontSize = markerSize === "small" ? "0.9rem" : "1.5rem";
     const clusterSize = `${iconSizeRem / 2}rem`;
 
     return (

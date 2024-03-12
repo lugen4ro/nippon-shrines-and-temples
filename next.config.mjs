@@ -1,5 +1,4 @@
 import { withSentryConfig } from "@sentry/nextjs";
-/** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
         remotePatterns: [
@@ -9,16 +8,6 @@ const nextConfig = {
                 port: "",
             },
         ],
-    },
-    async redirects() {
-        return [
-            {
-                source: "/",
-                destination: "/map",
-                permanent: true,
-                statusCode: 301, // 301 redirect for SEO
-            },
-        ];
     },
 };
 

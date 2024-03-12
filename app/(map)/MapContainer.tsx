@@ -66,8 +66,8 @@ const MapContainer = ({ places }: Props) => {
                     {/*     setSliderValue={setSliderValue} */}
                     {/* /> */}
                 </Flex>
-                {/* <DynamicMap markers={places} markerSize={markerSize} /> */}
-                <Map markers={places} markerSize={markerSize} />
+                <DynamicMap markers={places} markerSize={markerSize} />
+                {/* <Map markers={places} markerSize={markerSize} /> */}
                 {/* <Map markers={places} /> */}
             </Box>
         </>

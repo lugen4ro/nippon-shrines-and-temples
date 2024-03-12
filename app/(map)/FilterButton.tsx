@@ -1,8 +1,6 @@
 "use client";
 import { Category } from "@prisma/client";
 import { Box, Flex, Text } from "@radix-ui/themes";
-import React from "react";
-import { useState } from "react";
 import Badge from "./Badge";
 
 interface Props {

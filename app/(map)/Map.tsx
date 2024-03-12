@@ -75,6 +75,7 @@ const Map = ({ markers, markerSize }: Props) => {
                             key={marker.id}
                             marker={marker}
                             iconSizeRem={iconSizeRem}
+                            markerSize={markerSize}
                             eventHandlers={markerEventHandlers}
                         >
                             <Popup autoPan={isMobile ? false : true}>
@@ -96,6 +97,7 @@ const Map = ({ markers, markerSize }: Props) => {
                             key={marker.id}
                             marker={marker}
                             iconSizeRem={iconSizeRem}
+                            markerSize={markerSize}
                             eventHandlers={markerEventHandlers}
                         >
                             <Popup autoPan={isMobile ? false : true}>

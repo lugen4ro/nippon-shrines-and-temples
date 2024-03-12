@@ -8,7 +8,7 @@ const NavBar = () => {
     return (
         <nav className=" border-b px-5 py-2">
             <Flex justify="between" className="items-center pr-3">
-                <Link href="/map">
+                <Link href="/">
                     <Flex gap="2" className="items-center">
                         <Image
                             src="/icons/icon.png"

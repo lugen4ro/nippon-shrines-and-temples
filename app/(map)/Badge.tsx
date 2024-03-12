@@ -50,7 +50,7 @@ const Badge = ({
     return (
         <Box
             className={
-                `w-9 h-9 flex justify-center items-center rounded-full ${m.bgColor} ${m.fgColor} ` +
+                `flex-none w-9 h-9 ml-1 flex justify-center items-center rounded-full ${m.bgColor} ${m.fgColor} ` +
                 className
             }
         >

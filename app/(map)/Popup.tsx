@@ -1,10 +1,6 @@
 import { Place } from "@prisma/client";
-import { ChevronRightIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { FaChevronCircleLeft } from "react-icons/fa";
 import {
     Box,
-    Button,
     Flex,
     Heading,
     Link,
@@ -42,6 +38,7 @@ const CustomPopup = ({ marker }: { marker: Place }) => {
                 <Carousel
                     images={images}
                     isLoading={isLoading}
+                    marker={marker}
                     onLoad={() => setIsLoading(false)}
                 />
             }
@@ -53,11 +50,11 @@ const CustomPopup = ({ marker }: { marker: Place }) => {
                             <Heading size="6" className="inline-block">
                                 {marker.name}
                             </Heading>
-                            <RadixBadge ml="2">
-                                <Text size="2">{prefecture}</Text>
-                            </RadixBadge>
                         </Box>
                         <Text size="5">{marker.name_jp}</Text>
+                        <RadixBadge ml="2">
+                            <Text size="2">{prefecture}</Text>
+                        </RadixBadge>
                     </Box>
                     <Badge category={marker.category} />
                 </Flex>
@@ -91,10 +88,12 @@ export default CustomPopup;
 const Carousel = ({
     images,
     isLoading,
+    marker,
     onLoad,
 }: {
     images: Image[];
     isLoading: boolean;
+    marker: Place;
     onLoad: () => void;
 }) => {
     const settings = {
@@ -119,7 +118,7 @@ const Carousel = ({
                     <Box key={index} className="popupImageContainer relative">
                         <img
                             src={url}
-                            alt={`Slide ${index + 1}`}
+                            alt={`Slide ${index + 1} for ${marker.name} / ${marker.name_jp}`}
                             onLoad={icon ? onLoad : () => {}}
                             style={{ display: isLoading ? "none" : "block" }}
                         />

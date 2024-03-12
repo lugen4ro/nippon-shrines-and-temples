@@ -15,13 +15,7 @@ export default async function Home() {
 }
 
 export const metadata: Metadata = {
-    title: "Nippon Shrines",
+    title: "Nippon Shrines - Explore Japanese Shrines and Temples on map",
     description:
-        "Explore renowned Japanese shrines and temples on a simple and clean looking map.",
-    alternates: {
-        canonical: "https://nipponshrines.com/",
-        // languages: {
-        //     "en"
-        // }
-    },
+        "Explore renowned Japanese shrines and temples on a neat looking map.",
 };

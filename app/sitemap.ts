@@ -1,8 +1,20 @@
-export default async function sitemap() {
+import { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://nipponshrines.com";
 
     return [
-        { url: `${baseUrl}/map`, lastModified: new Date() },
-        { url: `${baseUrl}/about`, lastModified: new Date() },
+        {
+            url: `${baseUrl}`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 1,
+        },
+        {
+            url: `${baseUrl}/about`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.5,
+        },
     ];
 }
