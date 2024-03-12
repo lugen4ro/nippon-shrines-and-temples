@@ -20,7 +20,9 @@ export default async function Home() {
     const places = await prisma.place.findMany();
 
     // Get info about images of each place
-    const images = await prisma.image.findMany();
+    const images = await prisma.image.findMany({
+        orderBy: [{ icon: "desc" }, { public_id: "asc" }], // icon desc so we get main image first
+    });
     const res: Image[] = images.map((image) => ({
         public_id: image.public_id,
         url: image.url,
