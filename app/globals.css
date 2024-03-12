@@ -15,6 +15,17 @@
     }
 }
 
+.navbar {
+    background: rgb(237, 189, 210);
+    background: linear-gradient(
+        90deg,
+        rgba(237, 189, 210, 0.47839646112351186) 0%,
+        rgba(167, 200, 240, 0.44198189529718135) 100%
+    );
+
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
 /* ---------- Leaflet (Map) Style ---------- */
 
 /* Leaflet attribution size */

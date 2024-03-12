@@ -6,8 +6,8 @@ import React from "react";
 const AboutPage = () => {
     return (
         <Container className="py-5 px-5" size="3">
-            <Heading as="h1">About this website</Heading>
-            <Flex direction="column" gap="5">
+            <Heading as="h1">About this site</Heading>
+            <Flex direction="column" gap="5" className="mt-4">
                 <Text>Hi there, thanks for visiting my website!</Text>
                 <Text>
                     I created this website as a means to look around Japan and
@@ -34,6 +34,16 @@ const AboutPage = () => {
                         href="https://github.com/twitter/twemoji"
                     >
                         twemoji
+                    </Link>
+                    .
+                </Text>
+                <Text>
+                    Source code can be found on{" "}
+                    <Link
+                        target="_blank"
+                        href="https://github.com/lugen4ro/nippon-shrines-and-temples"
+                    >
+                        GitHub
                     </Link>
                     .
                 </Text>
